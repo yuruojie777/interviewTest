@@ -22,9 +22,10 @@ export const UserModal = (props)=>{
                     <label style={{fontWeight:'bold'}}>Tel: </label><span>{props.user.phone}</span><br/>
                     <label style={{fontWeight:'bold'}}>Addr: </label>
                     <span>
-                        {[props.user.address.street,props.user.address.suite,props.user.address.city,props.user.address.zip].join(" ")}
-                    </span><br/> 
-                    <label style={{fontWeight:'bold'}}>Company: </label><span>{props.user.company.name}</span><br/>
+                        {props.user.address!==undefined?[props.user.address.street,props.user.address.suite,props.user.address.city,props.user.address.zip].join(" "):''}
+                    </span>
+                    <br/> 
+                    <label style={{fontWeight:'bold'}}>Company: </label><span>{props.user.company!==undefined?props.user.company.name:''}</span><br/>
                     <label style={{fontWeight:'bold'}}>Website: </label><a target='_blank' rel="noreferrer" href={'http://'+props.user.website}>{props.user.website}</a><br/>
                     <button className="updateBtn" style={{float: 'left', marginTop: '1em'}}>Save</button>
                     <button className="deleteBtn" style={{float: 'right', marginTop: '1em'}}>Delete</button>

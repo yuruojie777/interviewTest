@@ -50,7 +50,7 @@ export const Contact = ()=>{
                 </div>
                 
             </div>
-            <UserModal user={currentUser}/>
+            {(!loading)?<UserModal user={currentUser}/>:<></>}
         </>
     )
 }
