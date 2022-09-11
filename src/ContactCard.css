@@ -1,0 +1,8 @@
+.name {
+    font-weight: bolder;
+}
+
+.name:hover {
+    color:aliceblue;
+    cursor: pointer;
+}

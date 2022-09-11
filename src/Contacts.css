@@ -1,0 +1,19 @@
+.contact-container {
+    position: relative;
+    background-color: rgb(249, 157, 103);
+    width: 20vw;
+    height: 60vh;
+    min-height: 500px;
+    min-width: 300px;
+    /* text-align: center; */
+    margin: auto;
+    margin-top: 10vh;
+    padding: 1em;
+    box-shadow: 
+        0 0 20px -5px black,
+        0 0 20px -5px black;
+}
+
+.contact-container li {
+    list-style: none;
+}
