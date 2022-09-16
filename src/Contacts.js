@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { ContactCard } from './ContactCard';
-import './Contacts.css';
+import './css/Contacts.css';
 import { Pagination } from './Pagination';
 import { UserModal } from './UserModal';
 export const Contact = ()=>{

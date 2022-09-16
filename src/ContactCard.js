@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material';
-import './ContactCard.css';
+import './css/ContactCard.css';
 export const ContactCard = (props)=> {
 
     function handleOnClick(e) {
