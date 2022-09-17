@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+ul > li{
+  display: inline-block;
+  margin: 1em;
+  font-size: xx-large;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  /* font-weight: bold; */
+}
+
+ul > li > a{
+  text-decoration: none;
+  color: black;
+}
+
+a:hover{
+  color: rgb(95, 94, 94);
+}
+
+ul {
+  margin: 0;
+  /* background-image: linear-gradient(to right, rgb(37, 37, 246), white); */
+  height: 100px
+}
+
+.navigation{
+  margin-left: 17%;
+  margin-right: 17%;
+  display: flex;
+}
+
+/* .navigation > div {
+  flex : 2;
+} */
+.wrapper {
+  margin-left: 17%;
+  margin-right: 17%;
+  height: 100vh;
+  /* background-color: #61dafb; */
+}
+
+
+.logo {
+  background-image: url('logo-color.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 200px;
+}
