@@ -2,44 +2,21 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navigation{
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  background-image: linear-gradient(to right, rgb(6, 6, 6) , white);
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 9;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (max-width: 1300px){
+@media (max-width: 480px){
   .navigation-list {
-    font-size: calc(9px + 1vh);
+    font-size: calc(5vw);
   }
 }
 
@@ -47,56 +24,82 @@ ul > li{
   display: inline;
   margin-right: 4vw;
   font-size: xx-large;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
   
 }
 
 ul > li > a{
   text-decoration: none;
-  color: rgb(117, 121, 121);
+  color: rgb(75, 75, 75);
+  height: fit-content;
 }
 
 a:hover{
   color: rgb(0, 0, 0);
+  cursor: pointer;
+  filter: contrast(200%) brightness(150%);
 }
 
-ul {
-  margin: 0;
-  margin-block-start: 0;
-  padding-inline-start: 2vw;
-  height: min-content;
+ul > li > a > img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: calc(30px + 1vh);
 }
 
-.navigation{
-  /* margin-left: 10%;
-  margin-right: 10%; */
-  display: flex;
-  background-image: linear-gradient(rgb(139, 197, 63), white);
-}
 
 .wrapper {
-  margin-left: 10%;
-  margin-right: 10%;
-  height: 100vh;
-  background-image: radial-gradient(black, white 70%);
+  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
 }
 
+.wrapper > * {
+  flex: 1 3 auto;
+}
 
-.logo {
-  /* background-image: url('logo-color.png'); */
-  background-repeat: no-repeat;
-  background-size: contain;
-  min-width: 10vw;
-  margin-left: 10vw;
+.tools{
+  width: 10vw;
+  /* background-color: blue; */
+  padding-top: 1vh;
+  position: fixed;
+  left:0;
+
+}
+.tool-list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.tool-list > li{
+  padding: 0;
+  margin: 0;
+  width: fit-content;
+}
+
+.left-space {
   width: 10vw;
 }
 
-.logo:hover {
-  cursor: pointer;
+
+.content{
+  width: 80vw;
+  padding: 5%;
+  /* background-color: aqua; */
 }
 
-.avatar {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.ad{
+  width: 10vw;
+  /* background-color: pink; */
 }
+
+.test{
+  /* width: 5vw; */
+  background-color: darkblue;
+}
+
+
+
 

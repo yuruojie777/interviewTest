@@ -1,37 +1,59 @@
-// import logo from './logo.svg';
 import { Avatar, Divider, rgbToHex } from '@mui/material';
 import './App.css';
-import { Contact } from './Contacts';
 import { Outlet } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { color } from '@mui/system';
+// import * as React from 'react';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NavigationIcon from '@mui/icons-material/Navigation';
 function App() {
+
 
   return (
     <div>
+
       <div className='navigation'>
-        
-        <a href='/'>
-        <img className='logo' src='logo-color.png'/>
-        </a>
         <nav>
           <ul>
+            <li className='navigation-list'>
+              <a href='/'>
+                <img src='logo.png'/>
+              </a>
+            </li>
             <li className='navigation-list'><a href='blog'>Blog</a></li>
             <li className='navigation-list'><a href='tech'>Tech</a></li>
             <li className='navigation-list'><a href='movie'>Movie</a></li>
             <li className='navigation-list'><a href='about'>About</a></li>
           </ul>
         </nav>
-        {/* <div className='avatar'>
-          <Avatar sx={{bgcolor: 'orange', width: '200%', height: '200%'}}>R</Avatar>
-        </div> */}
       </div>
 
-      <Divider/>
+      <div className='tools'>
+          <ul className='tool-list'>
+          <li>
+            <Fab color="primary" aria-label="add" size='small'>
+            <AddIcon />
+            </Fab>
+          </li>
+          <li>
+            <Fab color="secondary" aria-label="edit" size='small'>
+            <EditIcon />
+            </Fab>
+          </li>
+          </ul>
+        </div>
       <div  className='wrapper'>
-        {/* <Contact/> */}
-        <Outlet/>
+        <div className='left-space'></div>
+        <div className='content'>
+          <Outlet/>
+        </div>
+        <div className='ad'></div>
       </div>
-      
+
     </div>
   );
 }
