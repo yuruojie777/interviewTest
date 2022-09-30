@@ -1,5 +1,7 @@
+
 import BasicGrid from "./BasicGrid"
-import MovieContainer from "./MovieContainer"
+import PaginationRounded from "./Paginations"
+
 
 export const Movie = ()=>{
 
@@ -23,6 +25,7 @@ export const Movie = ()=>{
                     }
                 )}
             </ul>
+            
         </div>
     )
 }

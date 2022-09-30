@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import App from './App';
-import { Contact } from './Contacts';
-import { Blog } from './Blog';
-import { Tech } from './Tech';
-import { Movie } from './Movie';
-import { About } from './About';
 import reportWebVitals from './reportWebVitals';
 
 import {
@@ -14,34 +9,44 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
+import { Blog } from './blog/Blog';
+import { Login } from './login/Login';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     children: [
-      {
-        path: "/contacts",
-        element: <Contact />,
-      },
-      {
-        path: "/blog",
-        element: <Blog/>,
-      },
-      {
-        path: "/tech",
-        element: <Tech/>,
-      },
-      {
-        path: "/movie",
-        element: <Movie/>,
-      },
-      {
-        path: "/about",
-        element: <About/>
-      }
+      // {
+      //   path: "/contacts",
+      //   element: <Contact />,
+      // },
+      // {
+      //   path: "/blog",
+      //   element: <Blog/>,
+      // },
+      // {
+      //   path: "/tech",
+      //   element: <Tech/>,
+      // },
+      // {
+      //   path: "/movie",
+      //   element: <Movie/>,
+      // },
+      // {
+      //   path: "/about",
+      //   element: <About/>
+      // }
     ],
   },
+  {
+    path: "/blog",
+    element: <Blog/>,
+  },
+  {
+    path: "/login",
+    element: <Login/>,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
