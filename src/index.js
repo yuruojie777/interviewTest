@@ -10,7 +10,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Blog } from './blog/Blog';
-import { Login } from './login/Login';
+import { Login } from './Login';
 
 const router = createBrowserRouter([
   {
