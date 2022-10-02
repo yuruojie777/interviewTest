@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { Blog } from './blog/Blog';
 import { Login } from './login/Login';
+import ImageSlider from './ImageSlider';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>,
+  },
+  {
+    path: "/image",
+    element: <ImageSlider/>,
   }
 ]);
 

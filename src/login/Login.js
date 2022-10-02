@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Login.scss'
 export const Login = ()=>{
     
+
+    useEffect(() => {
+        document.title = 'Login';
+    });
 
     const activateContainer = ()=>{
         const container = document.querySelector('#container');
@@ -37,6 +41,7 @@ export const Login = ()=>{
         console.log('username is: '+username + ', and password is: ' + password);
         console.log('username is '+(username.length===0?'null':'not null'));
         console.log('password is '+(password.length===0?'null':'not null'));
+        
     }
 
     return(

@@ -1,12 +1,22 @@
 import './App.scss';
+import {useState, useEffect} from 'react';
+import ImageSlider from './ImageSlider';
 function App() {
 
+  const [posts, setPosts] = useState([]);
 
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.json())
+    .then(json => {
+      setPosts(json);
+    })
+  },[posts])
 
-function onHandleClickToggleButton(e){
-  document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
-  document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
-}
+  function onHandleClickToggleButton(e){
+    document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
+    document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
+  }
 
   return (
     <>
@@ -37,7 +47,11 @@ function onHandleClickToggleButton(e){
           </ul>
         </div>
       </nav>
-      <main>Main</main>
+      <main>
+        {/* Main */}
+        {posts.slice(0,10).map(post=>{return <li key={post.id}>{JSON.stringify(post)}</li>})}
+        
+      </main>
       <div id='sidebar'>
         Sidebar
           {/* <ul>
@@ -47,7 +61,10 @@ function onHandleClickToggleButton(e){
             <li><a href='#'>About</a></li>
           </ul> */}
       </div>
-      <div id='content1'>Content1</div>
+      <div id='content1'>
+        {/* Content1 */}
+      <ImageSlider/>
+      </div>
       <div id='content2'>Content2</div>
       <div id='content3'>Content3</div>
       <footer>Footer</footer>

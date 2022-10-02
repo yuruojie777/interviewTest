@@ -6,8 +6,8 @@
   display: grid;
   height: 100vh;
   width: 100vw;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 0.2fr 1.5fr 1.2fr 0.8fr;
+  grid-template-columns: 1fr 0.6fr 1fr 1fr;
+  grid-template-rows: 0.2fr 1.5fr 1.5fr 0.2fr;
   grid-template-areas: 
     "nav nav nav nav"
     "sidebar main main main"
@@ -121,6 +121,10 @@ footer {
   .my-toggle-button {
     display: flex !important;
   }
+
+  main{
+    grid-template-columns: 1fr !important;
+  }
 }
 
 
@@ -222,4 +226,19 @@ footer {
 #sidebar li {
   background: #555;
   list-style: none;
+}
+
+
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+
+  & li {
+    display: block;
+    width: inherit;
+    background: #555;
+  }
 }
