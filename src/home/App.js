@@ -5,7 +5,7 @@ import Post from './Post';
 import SideBar from './SideBar';
 function App() {
 
-  const [user, setUser] = useState('Ruojie');
+  const [user, setUser] = useState('小饼干');
   const [login, setLogin] = useState(true);
   const [posts, setPosts] = useState([]);
   const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
@@ -22,7 +22,7 @@ function App() {
 
   function onHandleClickToggleButton(e){
     document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
-    document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
+    if(!login) document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
   }
 
   return (
