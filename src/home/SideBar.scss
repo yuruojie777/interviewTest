@@ -1,0 +1,29 @@
+.sidebar {
+
+    & li {
+        display: block;
+        list-style: none;
+        padding: 2rem;
+    }
+
+    & li a:hover{
+        cursor: pointer;
+    }
+
+    & li a{
+        text-decoration: none;
+    }
+}
+
+
+@media only screen and (max-width: 836px) {
+    .sidebar ul{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        & li {
+            padding: 0;
+        }
+    }
+}

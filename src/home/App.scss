@@ -6,7 +6,7 @@
   display: grid;
   height: 100vh;
   width: 100vw;
-  grid-template-columns: 1fr 0.6fr 1fr 1fr;
+  grid-template-columns: 0.1fr 0.6fr 1fr 1fr;
   grid-template-rows: 0.2fr 1.5fr 1.5fr 0.2fr;
   grid-template-areas: 
     "nav nav nav nav"
@@ -26,14 +26,15 @@ nav {
 }
 
 main {
-  background: #84ffff;
+  background: white;
   grid-area: main;
   border-radius:var(--main-radius);
   padding-top: var(--main-padding);
 }
 
 #sidebar {
-  background: #18ffff;
+  // background: #18ffff;
+  background: rgb(17, 16, 28);
   grid-area: sidebar;
   border-radius:var(--main-radius);
   padding-top: var(--main-padding);
@@ -68,7 +69,7 @@ footer {
 } 
 
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 836px) {
   .container{
     grid-template-columns: 1fr;
     grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1.2fr 1.2fr 1fr;
@@ -122,6 +123,15 @@ footer {
     display: flex !important;
   }
 
+
+  .avatar-img img{
+    position: absolute;
+    top: 0.75rem;
+    left: 1rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
   main{
     grid-template-columns: 1fr !important;
   }
@@ -151,6 +161,23 @@ footer {
   width: 6.5rem;
   height: 3rem;
   border-radius: 5px 5px 0 0;
+}
+
+.username {
+  position: absolute;
+  font-size: smaller;
+  top: 1.8rem;
+  right: 5.5rem;
+}
+
+.avatar-img img {
+  display: block;
+  position: absolute;
+  right: 2rem;
+  top: 0.75rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 5px;
 }
 
 .navbar-links ul {
@@ -219,15 +246,6 @@ footer {
   border-radius: 10px;
 }
 
-#sidebar ul{
-  background: #333;
-}
-
-#sidebar li {
-  background: #555;
-  list-style: none;
-}
-
 
 
 main {
@@ -238,7 +256,5 @@ main {
 
   & li {
     display: block;
-    width: inherit;
-    background: #555;
   }
 }

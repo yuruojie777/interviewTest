@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import App from './App';
+import App from './home/App';
 import reportWebVitals from './reportWebVitals';
 
 import {
@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import { Blog } from './blog/Blog';
 import { Login } from './login/Login';
-import ImageSlider from './ImageSlider';
 
 const router = createBrowserRouter([
   {
@@ -47,10 +46,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>,
-  },
-  {
-    path: "/image",
-    element: <ImageSlider/>,
   }
 ]);
 

@@ -1,9 +1,16 @@
 import './App.scss';
 import {useState, useEffect} from 'react';
 import ImageSlider from './ImageSlider';
+import Post from './Post';
+import SideBar from './SideBar';
 function App() {
 
+  const [user, setUser] = useState('Ruojie');
+  const [login, setLogin] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
+
+
 
   useEffect(()=>{
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -40,26 +47,30 @@ function App() {
           </ul>
         </div>
 
-        <div className='sign-in-up-links'>
+        {
+          login?<></>:(<div className='sign-in-up-links'>
           <ul>
             <li><a href='login'>login</a></li>
             <li><a href='register'>register</a></li>
           </ul>
+        </div>)
+        }
+
+        <span className='username'>{user}</span>
+        <div className='avatar-img'>
+          <img src={avatar}></img>
         </div>
       </nav>
       <main>
         {/* Main */}
-        {posts.slice(0,10).map(post=>{return <li key={post.id}>{JSON.stringify(post)}</li>})}
+        {/* <span></span> */}
+        {posts.slice(0,10).map(post=>{
+          return <li key={post.id}><Post post={post}/></li>})
+          }
         
       </main>
       <div id='sidebar'>
-        Sidebar
-          {/* <ul>
-            <li><a href='blog'>Blog</a></li>
-            <li><a href='#'>Tech</a></li>
-            <li><a href='#'>Movie</a></li>
-            <li><a href='#'>About</a></li>
-          </ul> */}
+        <SideBar/>
       </div>
       <div id='content1'>
         {/* Content1 */}

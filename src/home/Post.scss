@@ -1,0 +1,16 @@
+.post-container{
+    background-color: bisque;
+    border-radius: 5px;
+    width: inherit;
+    height: 150px;
+    padding: 1rem;
+    opacity: 0.5;
+
+    & h3{
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    & p{
+        text-align:justify;
+    }
+}
