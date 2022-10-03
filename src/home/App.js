@@ -8,7 +8,8 @@ function App() {
   const [user, setUser] = useState('小饼干');
   const [login, setLogin] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
+  const [avatar, setAvatar] = useState('binggan.jpg');
+  // const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
 
 
 
