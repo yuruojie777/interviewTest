@@ -1,0 +1,113 @@
+$chatbox-height: 400px;
+$chatbox-width: 300px;
+$clr-primary: #18ffff;
+$clr-primary-light: #adffff;
+$clr-primary-dark: #091034;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-bg: #5771f3;
+@import url('https://fonts.googleapis.com/css2?family=Convergence&family=Noto+Sans+SC:wght@300&display=swap');
+.chatbox-container {
+    opacity: 0;
+    position: fixed;
+    border-radius: 10px;
+    box-shadow: -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    top: -50%;
+    left: 50%;
+    background-color: white;
+    width: $chatbox-width;
+    height: $chatbox-height;
+    margin-top: calc($chatbox-height*(-0.5));
+    margin-left: calc($chatbox-width*(-0.55));
+    // padding: 1rem;
+    display: grid;
+    grid-template-rows: 1fr 4fr 0.4fr;
+    grid-template-areas: 'chat-title'
+                        'chat-screen'
+                        'input-container';
+    // gap: 0.5rem;
+
+    & .chat-screen {
+        background-color: rgb(245,245,245);
+        overflow-y: scroll;
+
+        & li{
+            list-style: none;
+        }
+
+        & li p {
+            display: inline-block;
+            border-radius: 5px;
+            padding: 0.5rem;
+        }
+
+        & .left p{
+            background-color: white;
+            margin-left: 0.5rem;
+            margin-right: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        & .right p {
+            background-color: rgb(149,236,105);
+            margin-right: 0.5rem;
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        & .left{
+            text-align: left;
+        }
+
+        & .right{
+            text-align: right;
+        }
+    }
+
+  }
+
+
+.show{
+    top: 50%;
+    opacity: 1;
+    transition: top 0.2s ease-in;
+  }
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    // background-color: gray;
+
+    & button {
+        width: 15%;
+        height: 68%;
+        background-color: rgb(51, 51, 51);
+        border-width: 0;
+        border-radius: 0 5px 5px 0;
+    }
+}
+
+.input-box {
+    resize: none;
+    padding: 0.2rem;
+    width: 70%;
+    height: 50%;
+    margin-right: 2px;
+    outline: none;
+    border-width: 1px;
+    border-radius: 5px 0 0 5px;
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow: hidden;
+}
+

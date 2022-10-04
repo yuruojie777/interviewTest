@@ -1,9 +1,14 @@
 .sidebar {
 
     & li {
-        display: block;
+        display: inline-block;
         list-style: none;
-        padding: 2rem;
+        padding: 1rem;
+    }
+
+    & li:hover {
+        background: rgb(54, 51, 90);
+        cursor: pointer;
     }
 
     & li a:hover{
@@ -11,6 +16,9 @@
     }
 
     & li a{
+        display: inline-block;
+        width: inherit;
+        height: inherit;
         text-decoration: none;
     }
 }

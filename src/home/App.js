@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import ImageSlider from './ImageSlider';
 import Post from './Post';
 import SideBar from './SideBar';
+import ChatBox from './ChatBox';
 function App() {
 
   const [user, setUser] = useState('小饼干');
@@ -25,6 +26,8 @@ function App() {
     document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
     if(!login) document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
   }
+
+
 
   return (
     <>
@@ -81,6 +84,10 @@ function App() {
       <div id='content3'>Content3</div>
       <footer>Footer</footer>
     </div>
+    <div className='chatbox'>
+      <ChatBox/>
+    </div>
+    
     </>
   );
 }

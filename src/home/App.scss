@@ -33,7 +33,8 @@ main {
 }
 
 #sidebar {
-  // background: #18ffff;
+  position: sticky;
+  top: 0;
   background: rgb(17, 16, 28);
   grid-area: sidebar;
   border-radius:var(--main-radius);
@@ -258,3 +259,4 @@ main {
     display: block;
   }
 }
+
