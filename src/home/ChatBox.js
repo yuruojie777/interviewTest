@@ -1,20 +1,38 @@
 import './ChatBox.scss';
+import {useState,useRef, useEffect} from 'react';
 const ChatBox = ()=>{
 
     const username = '小土豆';
-
-    const chatHistory = [
+    const [currentMessage, setCurrentMessage] = useState('');
+    const [chatHistory, setChatHistory] = useState([
         {'message':'hello!','userid':1},
         {'message':'早上好呀','userid':2},
         {'message':'今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？','userid':1},
         {'message':'不知道呀','userid':2},
         {'message':'我也不到','userid':1}
-    ]
+    ])
+
+    const chatListRef = useRef(null);
+
+    function sendMessage(e){
+        e.preventDefault();
+        if(currentMessage.length === 0) return;
+        setChatHistory(old=>[...old, {message:currentMessage,userid:2}]);
+        document.querySelector('.input-box').value = '';
+        setCurrentMessage('');
+    }
+
+
+    useEffect(() => {
+        
+        const current = chatListRef.current;
+        current.scrollTop = current.scrollHeight;
+    }, [chatHistory]);
 
     return(
         <div className="chatbox-container">
             <h3 className='chat-title'>{username}</h3>
-            <div className='chat-screen'>
+            <div className='chat-screen' ref={chatListRef}>
                 {chatHistory.map(
                     (item, index)=>{
                         return (
@@ -26,8 +44,10 @@ const ChatBox = ()=>{
                 )}
             </div>
             <div className='input-container'>
-                <textarea className='input-box'></textarea>
-                <button><box-icon name='send' color='white'></box-icon></button>
+                <form>
+                    <textarea className='input-box' onChange={e=>setCurrentMessage(e.target.value)}></textarea>
+                    <button type='submit' onClick={sendMessage}><box-icon name='send' color='white'></box-icon></button>
+                </form>
             </div>
         </div>
     )
