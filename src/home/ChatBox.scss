@@ -27,9 +27,10 @@ $clr-bg: #5771f3;
     border-radius: 10px;
     box-shadow: -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
     text-align: center;
-    top: -50%;
-    left: 54%;
-    background-color: white;
+    top: 36%;
+    left: -54%;
+    scale: 0;
+    background: linear-gradient(93.12deg, #581b98 0.52%, #9c1de7 100%);
     width: $chatbox-width;
     height: $chatbox-height;
     margin-top: calc($chatbox-height*(-0.5));
@@ -42,6 +43,53 @@ $clr-bg: #5771f3;
                         'input-container';
     // gap: 0.5rem;
 
+    overflow: hidden;
+    & .chat-title {
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+
+        & h3{
+            color: white;
+        }
+
+        & img {
+            position: absolute;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        & .min-bar{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            
+            cursor: pointer;
+
+            &:hover{
+                background-color: #be7ae6;
+            }
+
+            & span{
+                background-color: white;
+                height: 2px;
+                width: 15px;
+            }
+        }
+    }
+
+
+
     & .chat-screen {
         background-color: rgb(245,245,245);
         overflow-y: scroll;
@@ -52,12 +100,15 @@ $clr-bg: #5771f3;
 
         & li p {
             display: inline-block;
-            border-radius: 5px;
+            border-radius: 15px;
             padding: 0.5rem;
+            font-size: smaller;
+            text-align: left;
         }
 
         & .left p{
-            background-color: white;
+            background-color: rgb(224, 224, 224);
+            color: black;
             margin-left: 0.5rem;
             margin-right: 2rem;
             margin-top: 0.5rem;
@@ -65,7 +116,8 @@ $clr-bg: #5771f3;
         }
 
         & .right p {
-            background-color: rgb(149,236,105);
+            background-color: rgb(94, 38, 155);
+            color: white;
             margin-right: 0.5rem;
             margin-left: 2rem;
             margin-top: 0.5rem;
@@ -85,9 +137,11 @@ $clr-bg: #5771f3;
 
 
 .show{
-    top: 36%;
+    left: 54%;
+    top: 40%;
+    scale: 1;
     opacity: 1;
-    transition: top 0.2s ease-in;
+    transition: all 0.3s  ease-in;
   }
 
 .input-container {
@@ -95,6 +149,7 @@ $clr-bg: #5771f3;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(93.12deg, #9c1de7 100%,#581b98 0.52%,);;
     // background-color: gray;
 
 
@@ -112,20 +167,20 @@ $clr-bg: #5771f3;
         height: 68%;
         background-color: rgb(51, 51, 51);
         border-width: 0;
-        border-radius: 0 5px 5px 0;
+        border-radius: 0 15px 15px 0;
         cursor: pointer;
     }
 }
 
 .input-box {
     resize: none;
-    padding: 0.2rem;
-    width: 70%;
+    padding: 0.2rem 0.8rem;
+    width: 60%;
     height: 50%;
     margin-right: 2px;
     outline: none;
     border-width: 1px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 15px 0 0 15px;
     font-family: 'Noto Sans SC', sans-serif;
     overflow: hidden;
 }

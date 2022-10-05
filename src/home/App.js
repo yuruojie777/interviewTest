@@ -91,7 +91,7 @@ function App() {
       <main>
         {/* Main */}
         {/* <span></span> */}
-        {posts.slice(0,10).map(post=>{
+        {posts.slice(0,9).map(post=>{
           return <li key={post.id}><Post post={post}/></li>})
           }
         

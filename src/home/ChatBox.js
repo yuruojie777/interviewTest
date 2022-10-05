@@ -24,6 +24,14 @@ const ChatBox = ()=>{
     }
 
 
+    function HandleClickChatButton(e){
+        const chatBox = document.querySelector('.chatbox-container');
+        if(chatBox.classList.contains('show')) chatBox.classList.remove('show');
+        else chatBox.classList.add('show');
+        
+    }
+
+
     useEffect(() => {
         const current = chatListRef.current;
         current.scrollTop = current.scrollHeight;
@@ -31,7 +39,13 @@ const ChatBox = ()=>{
 
     return(
         <div className="chatbox-container" onTouchMove={e=>{e = e.originalEvent || e;if(e.scale > 1) e.preventDefault();}}>
-            <h3 className='chat-title'>{username}</h3>
+            <div className='chat-title'>
+                <img src='https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'></img>
+                <h3>{username}</h3>
+                <div className='min-bar' onClick={e=>HandleClickChatButton(e)}>
+                    <span></span>
+                </div>
+            </div>
             <div className='chat-screen' ref={chatListRef}>
                 {chatHistory.map(
                     (item, index)=>{
