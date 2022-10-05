@@ -4,12 +4,14 @@ import ImageSlider from './ImageSlider';
 import Post from './Post';
 import SideBar from './SideBar';
 import ChatBox from './ChatBox';
+import {Link, useNavigate} from 'react-router-dom';
 function App() {
 
   const [user, setUser] = useState('小饼干');
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [posts, setPosts] = useState([]);
   const [avatar, setAvatar] = useState('binggan.jpg');
+  const navigate = useNavigate();
   // const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
 
 
@@ -22,12 +24,33 @@ function App() {
     })
   },[posts])
 
+
+  useEffect(()=>{
+    const cookies = document.cookie.split(';');
+    for(var i=0; i < cookies.length; i++){
+      if(cookies[i] === 'user=xiaobinggan'){
+        setLogin(true);
+      }
+    }
+  },[])
+
   function onHandleClickToggleButton(e){
     document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
     if(!login) document.getElementsByClassName('sign-in-up-links')[0].classList.toggle('active');
   }
 
 
+  function onClickAvatarButton(){
+    const dropdown = document.getElementsByClassName('drop-down-menu')[0]
+    if(dropdown.classList.contains('show-dropdown')) dropdown.classList.remove('show-dropdown');
+    else dropdown.classList.add('show-dropdown');
+  }
+
+
+
+  function logout(){
+    document.cookie = "user=xiaobinggan ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+  }
 
   return (
     <>
@@ -60,9 +83,9 @@ function App() {
         </div>)
         }
 
-        <span className='username'>{user}</span>
-        <div className='avatar-img'>
-          <img src={avatar}></img>
+        <span className='username'>{login?user:'未登录'}</span>
+        <div className='avatar-img' onClick={onClickAvatarButton}>
+          <img src={login?avatar:'https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'}></img>
         </div>
       </nav>
       <main>
@@ -87,7 +110,14 @@ function App() {
     <div className='chatbox'>
       <ChatBox/>
     </div>
-    
+    {
+      login?    
+      <div className='drop-down-menu'>
+        <li><a>Setting</a></li>
+        <li><a>Profile</a></li>
+        <li onClick={e=>{logout();setLogin(false);navigate('/login')}}><a>Logout</a></li>
+      </div>:''
+    }
     </>
   );
 }

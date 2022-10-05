@@ -9,7 +9,8 @@ const ChatBox = ()=>{
         {'message':'早上好呀','userid':2},
         {'message':'今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？今天中午吃什么？','userid':1},
         {'message':'不知道呀','userid':2},
-        {'message':'我也不到','userid':1}
+        {'message':'我也不到','userid':1},
+        {'message':'你也不知道？','userid':2}
     ])
 
     const chatListRef = useRef(null);
@@ -24,13 +25,12 @@ const ChatBox = ()=>{
 
 
     useEffect(() => {
-        
         const current = chatListRef.current;
         current.scrollTop = current.scrollHeight;
     }, [chatHistory]);
 
     return(
-        <div className="chatbox-container">
+        <div className="chatbox-container" onTouchMove={e=>{e = e.originalEvent || e;if(e.scale > 1) e.preventDefault();}}>
             <h3 className='chat-title'>{username}</h3>
             <div className='chat-screen' ref={chatListRef}>
                 {chatHistory.map(
@@ -44,9 +44,12 @@ const ChatBox = ()=>{
                 )}
             </div>
             <div className='input-container'>
-                <form>
+                <form onKeyDown={e=>{if(e.key === 'Enter') {
+                    sendMessage(e);
+                    document.querySelector('.input-box').value = '';
+                }}}>
                     <textarea className='input-box' onChange={e=>setCurrentMessage(e.target.value)}></textarea>
-                    <button type='submit' onClick={sendMessage}><box-icon name='send' color='white'></box-icon></button>
+                    <button type='submit' onClick={e=>sendMessage(e)}><box-icon name='send' color='white'></box-icon></button>
                 </form>
             </div>
         </div>

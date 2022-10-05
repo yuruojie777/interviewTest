@@ -260,3 +260,27 @@ main {
   }
 }
 
+.drop-down-menu {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 0;
+
+  & li{
+    padding: 1rem;
+    width: 60px;
+    border-bottom: white solid 1px;
+    color: white;
+    background-color: rgb(51, 51, 51);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  & li:hover{
+    background-color: #555;;
+  }
+}
+
+.show-dropdown {
+  display: inline;
+}

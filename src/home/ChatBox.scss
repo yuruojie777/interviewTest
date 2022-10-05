@@ -13,6 +13,14 @@ $clr-gray600: #2a324b;
 $clr-gray700: #161d34;
 $clr-bg: #5771f3;
 @import url('https://fonts.googleapis.com/css2?family=Convergence&family=Noto+Sans+SC:wght@300&display=swap');
+
+
+@media only screen and (max-width : 550px) {
+    .chatbox-container{
+        width: 200px !important;
+    }
+}
+
 .chatbox-container {
     opacity: 0;
     position: fixed;

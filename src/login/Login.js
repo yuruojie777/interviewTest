@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+import {Link, useNavigate} from 'react-router-dom';
 import './Login.scss'
 export const Login = ()=>{
     
 
+
+    const navigate = useNavigate();
     useEffect(() => {
         document.title = 'Login';
     });
@@ -41,7 +44,10 @@ export const Login = ()=>{
         console.log('username is: '+username + ', and password is: ' + password);
         console.log('username is '+(username.length===0?'null':'not null'));
         console.log('password is '+(password.length===0?'null':'not null'));
-        
+        if(username === 'xiaobinggan' && password==='xiaobinggan') {
+            document.cookie = ('user=xiaobinggan');
+            navigate('/');
+        }
     }
 
     return(
