@@ -17,15 +17,24 @@ function App() {
 
 
   useEffect(()=>{
+    let isCanceled = false;
     fetch('https://jsonplaceholder.typicode.com/posts')
     .then(response => response.json())
     .then(json => {
-      setPosts(json);
+      if(isCanceled){
+        console.log(json);
+        setPosts(json);
+      }
     })
-  },[posts])
+
+    return ()=>{
+      isCanceled = true;
+    }
+  },[])
 
 
   useEffect(()=>{
+    // console.log("cookie is working!");
     const cookies = document.cookie.split(';');
     for(var i=0; i < cookies.length; i++){
       if(cookies[i] === 'user=xiaobinggan'){
