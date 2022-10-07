@@ -11,37 +11,28 @@ import {
 } from "react-router-dom";
 import { Blog } from './blog/Blog';
 import { Login } from './login/Login';
+import {Tech} from './tech/Tech';
+import {About} from './about/About';
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     children: [
-      // {
-      //   path: "/contacts",
-      //   element: <Contact />,
-      // },
-      // {
-      //   path: "/blog",
-      //   element: <Blog/>,
-      // },
-      // {
-      //   path: "/tech",
-      //   element: <Tech/>,
-      // },
-      // {
-      //   path: "/movie",
-      //   element: <Movie/>,
-      // },
-      // {
-      //   path: "/about",
-      //   element: <About/>
-      // }
+      {
+        path: "/blog",
+        element: <Blog/>,
+      },
+      {
+        path: "/tech",
+        element: <Tech/>,
+      },
+      {
+        path: "/about",
+        element: <About/>
+      }
     ],
-  },
-  {
-    path: "/blog",
-    element: <Blog/>,
   },
   {
     path: "/login",

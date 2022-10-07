@@ -1,0 +1,15 @@
+.tech-container {
+    height: 100vh;
+    width: inherit;
+    background-color: aquamarine;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+    & h1{
+        font-family: 'Times New Roman', Times, serif;
+    }
+}

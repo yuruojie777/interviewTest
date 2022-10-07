@@ -1,40 +1,47 @@
 import './App.scss';
-import {useState, useEffect} from 'react';
-import ImageSlider from './ImageSlider';
-import Post from './Post';
+import React, {useState, useEffect} from 'react';
 import SideBar from './SideBar';
 import ChatBox from './ChatBox';
-import {Link, useNavigate} from 'react-router-dom';
+import {Outlet, useNavigate} from 'react-router-dom';
+
+
+export const ThemeContext = React.createContext();
 function App() {
+
+  const [darkTheme, setDarkTheme] = useState(true);
+
 
   const [user, setUser] = useState('小饼干');
   const [login, setLogin] = useState(false);
   const [posts, setPosts] = useState([]);
   const [avatar, setAvatar] = useState('binggan.jpg');
   const navigate = useNavigate();
-  // const [avatar, setAvatar] = useState('https://avatars.dicebear.com/api/male/john.svg?background=%230000ff');
-
 
 
   useEffect(()=>{
-    let isCanceled = false;
-    fetch('https://jsonplaceholder.typicode.com/posts')
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    fetch('https://jsonplaceholder.typicode.com/posts', {signal})
     .then(response => response.json())
     .then(json => {
-      if(isCanceled){
-        console.log(json);
-        setPosts(json);
+      console.log(json);
+      setPosts(json);
+    }).catch(err=>{
+      if(err.name === 'AbortError'){
+        console.log('cancelled!');
+      }else{
+        //handle errors
       }
     })
 
     return ()=>{
-      isCanceled = true;
+      controller.abort();
     }
   },[])
 
 
   useEffect(()=>{
-    // console.log("cookie is working!");
     const cookies = document.cookie.split(';');
     for(var i=0; i < cookies.length; i++){
       if(cookies[i] === 'user=xiaobinggan'){
@@ -42,6 +49,8 @@ function App() {
       }
     }
   },[])
+
+
 
   function onHandleClickToggleButton(e){
     document.getElementsByClassName('navbar-links')[0].classList.toggle('active');
@@ -55,18 +64,21 @@ function App() {
     else dropdown.classList.add('show-dropdown');
   }
 
-
-
   function logout(){
     document.cookie = "user=xiaobinggan ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
   }
+
+
+
+
+
 
   return (
     <>
     <div className='container'>
       <nav className='navbar'>
         <div className='brand-title'>
-          <a href='#'><img src='logo-color.png'></img></a>
+          <a href='/'><img src='logo-color.png'></img></a>
         </div>
         <a href='#' className='my-toggle-button' 
         onClick={onHandleClickToggleButton}>
@@ -77,9 +89,9 @@ function App() {
         <div className='navbar-links'>
           <ul>
             <li><a href='blog'>Blog</a></li>
-            <li><a href='#'>Tech</a></li>
-            <li><a href='#'>Movie</a></li>
-            <li><a href='#'>About</a></li>
+            <li><a href='tech'>Tech</a></li>
+            <li><a href='movie'>Tool</a></li>
+            <li><a href='about'>About</a></li>
           </ul>
         </div>
 
@@ -97,28 +109,28 @@ function App() {
           <img src={login?avatar:'https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'}></img>
         </div>
       </nav>
+
+      
       <main>
-        {/* Main */}
-        {/* <span></span> */}
-        {posts.slice(0,9).map(post=>{
+        {/* {posts.slice(0,9).map(post=>{
           return <li key={post.id}><Post post={post}/></li>})
-          }
-        
+          } */}
+          <Outlet/>
       </main>
       <div id='sidebar'>
         <SideBar/>
       </div>
-      <div id='content1'>
-        {/* Content1 */}
-      <ImageSlider/>
-      </div>
-      <div id='content2'>Content2</div>
-      <div id='content3'>Content3</div>
-      <footer>Footer</footer>
+      <footer>Copyright © yuruojie777@gmail.com</footer>
     </div>
+
+
     <div className='chatbox'>
+    <ThemeContext.Provider value={darkTheme}>
       <ChatBox/>
+    </ThemeContext.Provider>
     </div>
+
+
     {
       login?    
       <div className='drop-down-menu'>
@@ -127,6 +139,8 @@ function App() {
         <li onClick={e=>{logout();setLogin(false);navigate('/login')}}><a>Logout</a></li>
       </div>:''
     }
+
+
     </>
   );
 }
