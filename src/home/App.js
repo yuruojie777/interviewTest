@@ -8,6 +8,8 @@ import {Outlet, useNavigate} from 'react-router-dom';
 export const ThemeContext = React.createContext();
 function App() {
 
+
+  document.title=`Ruojie's Website`;
   const [darkTheme, setDarkTheme] = useState(true);
 
 

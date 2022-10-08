@@ -38,6 +38,7 @@ $form-padding: 1rem;
         display: none;
     }
     height: 540px;
+    transition: height 0.2s ease-in;
 }
 
 #login-container, #register-container {

@@ -31,12 +31,6 @@ export const Login = ()=>{
       };
 
 
-    /* Change page title according to the window */
-    useEffect(() => {
-        document.title = loginContainer.current.classList.contains('active')?'Register':'Login';
-    },[]);
-
-
     useEffect(()=>{
         if(validateEmail(registerEmail)) {
             checkEmailValid.current.classList.add('show-tick');
@@ -160,7 +154,7 @@ export const Login = ()=>{
                             </button>
                         </div>
                     </form>
-                    <a href='#' className='toggle signup' onClick={()=>loginContainer.current.classList.add('active')}>create an account here!</a>
+                    <a href='#' className='toggle signup' onClick={()=>{loginContainer.current.classList.add('active'); document.title='Register'}}>create an account here!</a>
                     
                 </div>
 
@@ -199,12 +193,12 @@ export const Login = ()=>{
                             <i className="uil uil-check" ref={checkConfirmPwdValid}></i>
                         </div>
                         <div className="form">
-                            <button type="submit" id="submit" className="submit-btn" disabled={!registerLoading}>
+                            <button type="submit" id="submit" className="submit-btn" disabled={registerLoading}>
                                 {'Sign up'+(registerLoading?'...':'')}
                             </button>
                         </div>
                     </form>
-                    <a href='#' className='toggle login' onClick={()=>loginContainer.current.classList.remove('active')}>login here!</a>
+                    <a href='#' className='toggle login' onClick={()=>{loginContainer.current.classList.remove('active');document.title='Login'}}>login here!</a>
                 </div>
 
             </div>
