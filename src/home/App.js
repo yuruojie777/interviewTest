@@ -3,8 +3,23 @@ import React, {useState, useEffect} from 'react';
 import SideBar from './SideBar';
 import ChatBox from './ChatBox';
 import {Outlet, useNavigate} from 'react-router-dom';
+// initialize firestore
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, query, orderBy, onSnapshot, where} from "firebase/firestore"; 
 
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAxsKt9f2cpo8MM243ZuOT_QZ_jKmmlpdU",
+  authDomain: "test-for-yuruojie.firebaseapp.com",
+  projectId: "test-for-yuruojie",
+  storageBucket: "test-for-yuruojie.appspot.com",
+  messagingSenderId: "547159601573",
+  appId: "1:547159601573:web:1a19221d336a867a6b784c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 export const ThemeContext = React.createContext();
 function App() {
 
@@ -13,42 +28,33 @@ function App() {
   const [darkTheme, setDarkTheme] = useState(true);
 
 
-  const [user, setUser] = useState('小饼干');
+  const [userInfo, setUserInfo] = useState({})
+  const [user, setUser] = useState('');
   const [login, setLogin] = useState(false);
   const [posts, setPosts] = useState([]);
   const [avatar, setAvatar] = useState('binggan.jpg');
+
   const navigate = useNavigate();
 
+  const getUserInfo = async(email)=>{
+    
+      const userRef = collection(db, "user");
+      const q = query(userRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setUserInfo(doc.data());
+        console.log(doc.id, " => ", doc.data());
+      });
 
-  useEffect(()=>{
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    fetch('https://jsonplaceholder.typicode.com/posts', {signal})
-    .then(response => response.json())
-    .then(json => {
-      console.log(json);
-      setPosts(json);
-    }).catch(err=>{
-      if(err.name === 'AbortError'){
-        console.log('cancelled!');
-      }else{
-        //handle errors
-      }
-    })
-
-    return ()=>{
-      controller.abort();
-    }
-  },[])
+      setLogin(true);
+    
+  }
 
 
   useEffect(()=>{
-    const cookies = document.cookie.split(';');
-    for(var i=0; i < cookies.length; i++){
-      if(cookies[i] === 'user=xiaobinggan'){
-        setLogin(true);
-      }
+    const email = localStorage.getItem('user')
+    if(email!=null){
+      getUserInfo(email);
     }
   },[])
 
@@ -67,7 +73,8 @@ function App() {
   }
 
   function logout(){
-    document.cookie = "user=xiaobinggan ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    // document.cookie = "user=xiaobinggan ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    localStorage.removeItem("user");
   }
 
 
@@ -106,17 +113,15 @@ function App() {
         </div>)
         }
 
-        <span className='username'>{login?user:'未登录'}</span>
+        <span className='username'>{login?userInfo.username:'未登录'}</span>
         <div className='avatar-img' onClick={onClickAvatarButton}>
-          <img src={login?avatar:'https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'}></img>
+          {/* <img src={login?avatar:'https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'}></img> */}
+          <img src={login?userInfo.avatar:'https://avatars.dicebear.com/api/male/john.svg?background=%230000ff'}></img>
         </div>
       </nav>
 
       
       <main>
-        {/* {posts.slice(0,9).map(post=>{
-          return <li key={post.id}><Post post={post}/></li>})
-          } */}
           <Outlet/>
       </main>
       <div id='sidebar'>
@@ -127,9 +132,7 @@ function App() {
 
 
     <div className='chatbox'>
-    <ThemeContext.Provider value={darkTheme}>
-      <ChatBox/>
-    </ThemeContext.Provider>
+      <ChatBox currentUser={userInfo}/>
     </div>
 
 

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
+import './Login.scss';
 
-import './Login.scss'
+
 export const Login = ()=>{
 
     const navigate = useNavigate();
@@ -81,15 +82,15 @@ export const Login = ()=>{
         const email = e.target.email.value
         const password = e.target.password.value
         const form = {
-            type: 'signup',
+            type: 'signin',
             email: email,
             password: password
         }
         setLoginLoading(true);
         await new Promise(r => setTimeout(r, 2000));
         setLoginLoading(false);
-        console.log(form);
-        document.cookie='user=xiaobinggan';
+        // document.cookie='user='+loginEmail;
+        localStorage.setItem("user", loginEmail);
         navigate('/');
     }
 
@@ -121,19 +122,18 @@ export const Login = ()=>{
         }
         setRegisterLoading(true);
         await new Promise(r => setTimeout(r, 2000));
-        console.log(form)
         setRegisterLoading(false);
-        document.cookie='user=xiaobinggan';
+        // document.cookie='user='+loginEmail;
+        localStorage.setItem("user", loginEmail);
         navigate('/');
     }
 
     return(
         <div id='container' ref={loginContainer}>
-
-
-
             {/* Login */}
             <div id='forms'>
+
+
                 <div id='login-container'>
                     <h1 className='title'>Sign in</h1>
                     <form className='form-group' onSubmit={(e)=>handleOnSumbitLogin(e)}>
@@ -150,17 +150,12 @@ export const Login = ()=>{
                         </div>
                         <div className="form">
                             <button type="submit" id="submit" className="submit-btn">
-                                Sign in
+                                {'Sign in'+(loginLoading?'...':'')}
                             </button>
                         </div>
                     </form>
                     <a href='#' className='toggle signup' onClick={()=>{loginContainer.current.classList.add('active'); document.title='Register'}}>create an account here!</a>
-                    
                 </div>
-
-
-
-
 
 
 
@@ -183,7 +178,6 @@ export const Login = ()=>{
                             {/* <i className='uil uil-eye-slash showHidePw' onClick={showHidePassWord}></i> */}
                             <i className="uil uil-check" ref={checkPwdValid}></i>
                         </div>
-
                         <div className="form">
                             <input type="password" id="confirm-password" className="form__input" name='confirm'
                             onChange={(e)=>{setRegisterConfirmPassword(e.target.value)}}
