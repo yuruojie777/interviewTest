@@ -1,5 +1,5 @@
 $chatbox-height: 600px;
-$chatbox-width: 500px;
+$chatbox-width: 400px;
 $clr-primary: #18ffff;
 $clr-primary-light: #adffff;
 $clr-primary-dark: #091034;
@@ -17,8 +17,16 @@ $clr-bg: #5771f3;
 
 @media only screen and (max-width : 550px) {
     .chatbox-container{
-        width: 100vw !important;
+        width: 200px !important;
+        height: 300px !important;
     }
+    .show{
+        left: 80% !important;
+        top: 10%;
+        scale: 1;
+        opacity: 1;
+        transition: all 0.3s  ease-in;
+      }
 }
 
 .chatbox-container {
