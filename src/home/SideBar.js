@@ -4,11 +4,9 @@ const SideBar = ()=>{
 
 
     function HandleClickChatButton(e){
-        if(localStorage.getItem("user")!=null){
-            const chatBox = document.querySelector('.chatbox-container');
-            if(chatBox.classList.contains('show')) chatBox.classList.remove('show');
-            else chatBox.classList.add('show');
-        }
+        const chatBox = document.querySelector('.chatbox-container');
+        if(chatBox.classList.contains('show')) chatBox.classList.remove('show');
+        else chatBox.classList.add('show');
     }
 
     return(

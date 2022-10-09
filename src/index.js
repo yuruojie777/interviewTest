@@ -13,12 +13,14 @@ import { Blog } from './blog/Blog';
 import { Login } from './login/Login';
 import {Tech} from './tech/Tech';
 import {About} from './about/About';
+import { AuthProvider } from './context/AuthContext';
+import { Profile } from './profile/Profile';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <AuthProvider><App/></AuthProvider>,
     children: [
       {
         path: "/blog",
@@ -36,7 +38,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <AuthProvider><Login/></AuthProvider>,
+  },
+  {
+    path: "/profile",
+    element: <AuthProvider><Profile/></AuthProvider>,
   }
 ]);
 

@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 import './Login.scss';
 
 
@@ -21,7 +23,7 @@ export const Login = ()=>{
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
     const [registerLoading, setRegisterLoading] = useState(false);
     
-
+    const {signup, login, currentUser} = useAuth();
 
     const validateEmail = (email) => {
         return String(email)
@@ -81,17 +83,14 @@ export const Login = ()=>{
 
         const email = e.target.email.value
         const password = e.target.password.value
-        const form = {
-            type: 'signin',
-            email: email,
-            password: password
+        try{
+            setLoginLoading(true);  
+            login(email, password);
+            navigate('/');
+        } catch{
+            console.error("failed to login")
         }
-        setLoginLoading(true);
-        await new Promise(r => setTimeout(r, 2000));
         setLoginLoading(false);
-        // document.cookie='user='+loginEmail;
-        localStorage.setItem("user", loginEmail);
-        navigate('/');
     }
 
 
@@ -115,17 +114,16 @@ export const Login = ()=>{
             alert('Two password inconsistent');
             return;
         }
-        const form = {
-            type: 'signup',
-            email: email,
-            password: password
+
+        try{
+            setRegisterLoading(true);
+            await signup(email, password);
+            navigate('/');
+        } catch{
+            console.error("failed to signup");
         }
-        setRegisterLoading(true);
-        await new Promise(r => setTimeout(r, 2000));
+
         setRegisterLoading(false);
-        // document.cookie='user='+loginEmail;
-        localStorage.setItem("user", loginEmail);
-        navigate('/');
     }
 
     return(
@@ -161,7 +159,7 @@ export const Login = ()=>{
 
                 {/* Register */}
                 <div id='register-container'>
-                    <h1 className='title'>Sign up</h1>
+                    <h1 className='title'>{'Sign up'}</h1>
                     <form className='form-group' onSubmit={handleOnSumbitRegister}>
                         <div className="form">
                             <input type="text" id="email" className="form__input" name='email'

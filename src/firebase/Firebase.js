@@ -1,25 +1,17 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-// Follow this pattern to import other Firebase services
-// import { } from 'firebase/<service>';
-
-// TODO: Replace the following with your app's Firebase project configuration
+// import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from "firebase/auth";
+import { getFirestore, collection, getDocs, setDoc, doc, query, orderBy, onSnapshot} from "firebase/firestore"; 
 const firebaseConfig = {
-  apiKey: "AIzaSyCwJnwjTZYKZxm9IGtOcc5LuqmyFYtQPaE",
-  authDomain: "test-784f1.firebaseapp.com",
-  projectId: "test-784f1",
-  storageBucket: "test-784f1.appspot.com",
-  messagingSenderId: "432918867830",
-  appId: "1:432918867830:web:229b8ec107def19356d457"
+  apiKey: "AIzaSyAxsKt9f2cpo8MM243ZuOT_QZ_jKmmlpdU",
+  authDomain: "test-for-yuruojie.firebaseapp.com",
+  projectId: "test-for-yuruojie",
+  storageBucket: "test-for-yuruojie.appspot.com",
+  messagingSenderId: "547159601573",
+  appId: "1:547159601573:web:1a19221d336a867a6b784c"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// Get a list of cities from your database
-async function getMessage(db) {
-  const message = collection(db, 'message');
-  const messageSnapshot = await getDocs(message);
-  const messageList = messageSnapshot.docs.map(doc => doc.data());
-  return messageList;
-}
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export default app;
