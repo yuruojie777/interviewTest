@@ -64,9 +64,9 @@ export function AuthProvider({children}) {
               const uid = user.uid;
               setUid(uid);
               setCurrentUser(user);
+              setLoading(false);
             } else {
             }
-            setLoading(false);
         });
 
         return unsubscribe;
@@ -84,7 +84,7 @@ export function AuthProvider({children}) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading?children:<Loading/>}
+            {!loading?children:<Login/>}
         </AuthContext.Provider>
     )
 }

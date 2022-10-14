@@ -20,8 +20,8 @@ $clr-bg: #5771f3;
 
 @media only screen and (max-width : 550px) {
     .friend-container{
-        width: 200px !important;
-        height: 300px !important;
+        // width: 200px !important;
+        // height: 300px !important;
         width: 100vw !important;
         height: 100vh !important;
     }
@@ -99,6 +99,7 @@ $clr-bg: #5771f3;
 
         & input{
             width: $search-box-width;
+            // width: 100%;
             height: $search-box-height;
             font-size:x-large;
             outline: none;
@@ -113,6 +114,7 @@ $clr-bg: #5771f3;
 
         & button{
             width: calc($search-box-width + 1rem);
+            // width: 100%;
             height: $button-height;
             background-color: blue;
             border: none;
@@ -136,6 +138,7 @@ $clr-bg: #5771f3;
 
     & li{
         width: $chatbox-width;
+        // width: 100%;
         list-style: none;
         display: flex;
         flex-direction: row;
