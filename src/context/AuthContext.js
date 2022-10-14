@@ -64,9 +64,9 @@ export function AuthProvider({children}) {
               const uid = user.uid;
               setUid(uid);
               setCurrentUser(user);
-              setLoading(false);
             } else {
             }
+            setLoading(false);
         });
 
         return unsubscribe;
