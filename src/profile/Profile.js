@@ -13,7 +13,7 @@ export const Profile = () => {
     const photoUrlRef = useRef();
     const navigate = useNavigate();
 
-    function updateUserProfile(username, photoUrl){
+    async function updateUserProfile(username, photoUrl){
         updateProfile(currentUser, {
             displayName: username, photoURL: photoUrl
           }).then(() => {

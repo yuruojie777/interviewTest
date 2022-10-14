@@ -1,5 +1,5 @@
-$chatbox-height: 600px;
-$chatbox-width: 400px;
+$chatbox-height: 550px;
+$chatbox-width: 600px;
 $clr-primary: #18ffff;
 $clr-primary-light: #adffff;
 $clr-primary-dark: #091034;
@@ -19,6 +19,8 @@ $clr-bg: #5771f3;
     .chatbox-container{
         width: 200px !important;
         height: 300px !important;
+        width: 100vw !important;
+        height: 100vh !important;
     }
     .show{
         left: 80% !important;
@@ -46,13 +48,67 @@ $clr-bg: #5771f3;
     // padding: 1rem;
     display: grid;
     grid-template-rows: 1fr 4fr 0.4fr;
-    grid-template-areas: 'chat-title'
-                        'chat-screen'
-                        'input-container';
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+                        'friend-side-bar chat-title'
+                        'friend-side-bar chat-screen'
+                        'friend-side-bar input-container' ;
     // gap: 0.5rem;
 
     overflow: hidden;
+
+
+    & .friend-side-bar {
+        grid-area: friend-side-bar;
+        background-color: #581b98;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        & h2 {
+            height: 10%;
+            color: white;
+        }
+
+
+        & li{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content:flex-start;
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            width: inherit;
+            height: 2.5rem;
+            background-color: white;
+            border-bottom: #e1e5ee solid 1px;
+            color: black;
+
+
+            & img{
+                border-radius: 50%;
+                width: 20%;
+            }
+
+            &:hover{
+                background-color: #dfdfe6;
+            }
+        }
+    }
+
+
+
     & .chat-title {
+        grid-area: chat-title;
         display: flex;
         position: relative;
         flex-direction: row;
@@ -64,11 +120,12 @@ $clr-bg: #5771f3;
             color: white;
         }
 
+
         & img {
             position: absolute;
-            left: 30px;
-            width: 40px;
-            height: 40px;
+            left: 20px;
+            width: 2rem;
+            height: 2rem;
             border-radius: 50%;
         }
 
@@ -99,6 +156,7 @@ $clr-bg: #5771f3;
 
 
     & .chat-screen {
+        grid-area: chat-screen;
         background-color: rgb(245,245,245);
         overflow-y: scroll;
 
@@ -155,6 +213,7 @@ $clr-bg: #5771f3;
   }
 
 .input-container {
+    grid-area: input-container;
     display: flex;
     flex-direction: row;
     justify-content: center;

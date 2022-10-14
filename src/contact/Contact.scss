@@ -1,0 +1,217 @@
+$chatbox-height: 400px;
+$chatbox-width: 600px;
+$search-box-height: 20px;
+$button-height: 30px;
+$search-box-width: 300px;
+$clr-primary: #18ffff;
+$clr-primary-light: #adffff;
+$clr-primary-dark: #091034;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-bg: #5771f3;
+@import url('https://fonts.googleapis.com/css2?family=Convergence&family=Noto+Sans+SC:wght@300&display=swap');
+
+
+@media only screen and (max-width : 550px) {
+    .friend-container{
+        width: 200px !important;
+        height: 300px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+    .show{
+        left: 80% !important;
+        top: 10%;
+        scale: 1;
+        opacity: 1;
+        transition: all 0.3s  ease-in;
+      }
+}
+
+.friend-container {
+    opacity: 0;
+    position: fixed;
+    border-radius: 10px;
+    box-shadow: -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    top: 36%;
+    left: -54%;
+    scale: 0;
+    background: linear-gradient(93.12deg, #581b98 0.52%, #9c1de7 100%);
+    width: $chatbox-width;
+    height: $chatbox-height;
+    // margin-top: calc($chatbox-height*(-0.5));
+    margin-left: calc($chatbox-width*(-0.55));
+    overflow: hidden;
+    display: flex;
+    padding-top: 2rem;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+
+
+    & .search-title{
+
+        & h2{
+            color: white;
+        }
+
+
+        & .min-bar{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            
+            cursor: pointer;
+
+            &:hover{
+                background-color: #be7ae6;
+            }
+
+            & span{
+                background-color: white;
+                height: 2px;
+                width: 15px;
+            }
+        }
+    }
+
+    & form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 300px;
+
+        & input{
+            width: $search-box-width;
+            height: $search-box-height;
+            font-size:x-large;
+            outline: none;
+            border-radius: 10px;
+            border: none;
+            padding: 0.5rem;
+
+            &:focus{
+                outline: #18ffff solid 1px;
+            }
+        }
+
+        & button{
+            width: calc($search-box-width + 1rem);
+            height: $button-height;
+            background-color: blue;
+            border: none;
+            border-radius: 10px;
+
+
+            &:hover{
+                background-color: rgb(52, 52, 247);
+            }
+        }
+    }
+
+
+    & ul{
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        color: white;
+    }
+
+
+    & li{
+        width: $chatbox-width;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        & button{
+            width: 80px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bolder;
+            color: white;
+            padding: 0.2rem;
+        }
+
+        & .clear-btn{
+            background-color: black;
+
+            &:hover{
+                background-color: rgb(37, 37, 37);
+            }
+        }
+
+        & .add-btn{
+            background-color: blue;
+
+            &:hover{
+                background-color: rgb(52, 52, 247);
+            }
+        }
+
+    }
+
+
+    & .request-box{
+
+
+        & p span{
+            color:#18ffff;
+        }
+
+
+        & ul li button{
+            width: 80px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bolder;
+            color: white;
+            padding: 0.2rem;
+        }
+
+        & ul li .confirm-btn{
+            background-color: #14692e;
+
+            &:hover{
+                background-color: #219f46;
+            }
+        }
+
+        & ul li .delete-btn{
+            background-color: #cd0001;
+
+            &:hover{
+                background-color: #ea4242;
+            }
+        }
+    }
+
+  }
+
+
+.show{
+    left: 50%;
+    top: 10%;
+    scale: 1;
+    opacity: 1;
+    transition: all 0.3s  ease-in;
+  }
+

@@ -1,15 +1,16 @@
 import './ChatBox.scss';
 import {useState,useRef, useEffect} from 'react';
-import { collection, setDoc, doc, query, orderBy, onSnapshot, where } from "firebase/firestore"; 
+import { collection, setDoc, doc, query, orderBy, onSnapshot, where, getDocs, getDoc } from "firebase/firestore"; 
 import {db} from '../firebase/Firebase';
 
   
 const ChatBox = (props)=>{
-
-    const chatTo = props.currentUser.displayName ==='Ruojie'?'miguojuanjuan@gmail.com':'yuruojie@gmail.com';
+    
     const [currentMessage, setCurrentMessage] = useState('');
     const [message, setMessage] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [chatTo, setChatTo] = useState('');
+    const [loading, setLoading] = useState(false);
     const chatListRef = useRef(null);
 
     async function sendMessage(e){
@@ -17,7 +18,7 @@ const ChatBox = (props)=>{
         if(currentMessage.length === 0) return;
 
 
-        setMessage(old=>[...old, {text:currentMessage,from_email:props.currentUser.email}]);
+        // setMessage(old=>[...old, {text:currentMessage,from_email:props.currentUser.email}]);
         document.querySelector('.input-box').value = '';
         const messageRef = doc(collection(db, 'message'));
         await setDoc( messageRef,
@@ -45,40 +46,74 @@ const ChatBox = (props)=>{
     }
 
 
+    async function getUserFriend() {
+        //Get currentUserInfo
+        
+        let friends = [];
+        const usersRef = collection(db, "user");
+        const q = query(usersRef, where("email", "==", props.currentUser.email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            friends = (doc.data().friends);
+        });
+
+        return friends
+    }
+
+
+    async function getFriendInfo(friends) {
+        const info_list = [];
+        const friendsRef = collection(db, "user");
+        const q = query(friendsRef, where("email", "in", friends))
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            info_list.push(doc.data());
+        })
+        return info_list;
+
+    }
 
     useEffect(()=>{
-        function getFriendList(){
-            const q = query(collection(db, "user"), where("email", "==", props.currentUser.email));
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    doc.data().friends.forEach((friend)=>{
-                        const q = query(collection(db, "user"), where("email", "==", friend));
-                        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                setFriends(prev=>[...prev,doc.data()]);
-                            });
-                        });
-                    })
-                });
-            });
-        }
-
-        return getFriendList();
+        getUserFriend().then(
+            (data)=>{
+                setChatTo(data[0])
+                if(data.length !== 0) getFriendInfo(data).then(
+                    (friends)=>{
+                        setFriends(friends);
+                    }
+                )
+            }
+        )
     },[])
 
 
 
+
+    // Load from messages
     useEffect(()=>{
-        const q = query(collection(db, "message"), orderBy("createtime"));
+        const q = query(collection(db, "message"), where("from_email", "==", props.currentUser.email));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const messages = [];
             querySnapshot.forEach((doc) => {
-                messages.push(doc.data());
+                messages.push(doc);
             });
-
-            setMessage([...messages]);
+            setMessage(prev=>[...prev, ...messages]);
         });
     },[])
+
+
+    // Load to messages
+    useEffect(()=>{
+        const q = query(collection(db, "message"), where("to_email", "==", props.currentUser.email));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const messages = [];
+            querySnapshot.forEach((doc) => {
+                messages.push(doc);
+            });
+            setMessage(prev=>[...prev, ...messages]);
+        });
+    },[])
+
 
     useEffect(() => {
         const current = chatListRef.current;
@@ -86,20 +121,52 @@ const ChatBox = (props)=>{
     }, [message]);
 
 
+    function compare( a, b ) {
+        if ( a.createtime < b.createtime ){
+          return -1;
+        }
+        if ( a.createtime > b.createtime ){
+          return 1;
+        }
+        return 0;
+      }
 
+
+      function uniqueArr(arr){
+        let map = new Map();
+        const result = []
+        for(let i=0; i<arr.length; i++){
+            if(!map.has(arr[i].id)){
+                map.set(arr[i].id, arr[i].data());
+                result.push(arr[i].data())
+            }
+        }
+        return result;
+      }
+
+
+
+    function renderMessage(messages, chatTo){
+        // console.log(messages);
+        const msgList = uniqueArr(messages).filter((message)=>{return message.from_email===chatTo||message.to_email===chatTo})
+        return msgList
+    }
 
 
     return (
         <div className="chatbox-container" onTouchMove={e=>{e = e.originalEvent || e;if(e.scale > 1) e.preventDefault();}}>
+            
             <div className='chat-title'>
-                <img src={friends[0]===undefined?'':friends[0].avatar}></img>
-                <h3>{friends[0]===undefined?'':friends[0].username}</h3>
+                {/* {friends[0]===undefined?'':<img src={friends[0].avatar}></img>}
+                <h3>{friends[0]===undefined?'':friends[0].username}</h3> */}
+                <img src={friends[0]!==undefined?friends.find((friend)=>friend.email===chatTo).avatar:''}></img>
+                <h3>{friends[0]!==undefined?friends.find((friend)=>friend.email===chatTo).username:''}</h3>
                 <div className='min-bar' onClick={HandleClickChatButton}>
                     <span></span>
                 </div>
             </div>
             <div className='chat-screen' ref={chatListRef}>
-                {message.map(
+                {renderMessage(message, chatTo).sort(compare).map(
                     (item, index)=>{
                         return (
                             item.from_email===props.currentUser.email
@@ -114,9 +181,20 @@ const ChatBox = (props)=>{
                     sendMessage(e);
                     document.querySelector('.input-box').value = '';
                 }}}>
-                    <textarea className='input-box' onChange={e=>setCurrentMessage(e.target.value)}></textarea>
+                    <textarea className='input-box' onChange={e=>setCurrentMessage(e.target.value)} disabled={friends.length===0}></textarea>
                     <button type='submit' onClick={e=>sendMessage(e)}><box-icon name='send' color='white'></box-icon></button>
                 </form>
+            </div>
+            <div className='friend-side-bar'>
+                <h2>Friend List</h2>
+                <ul>
+                    {friends.length!==0?friends.map(((friend, index)=>{return (
+                        <li key={index} onClick={e=>{console.log(friend.email);setChatTo(friend.email)}}>
+                            <img src={friend.avatar}></img>
+                            <p>{friend.username}</p>
+                        </li>
+                    )})):'You have no friends in your list'}
+                </ul>
             </div>
         </div>
     )

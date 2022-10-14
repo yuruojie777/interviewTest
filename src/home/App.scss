@@ -136,9 +136,9 @@ footer {
     left: 0;
   }
 
-  main{
-    grid-template-columns: 1fr !important;
-  }
+  // main{
+  //   grid-template-columns: 1fr !important;
+  // }
 }
 
 
@@ -254,8 +254,9 @@ footer {
 
 main {
 
-  display: flex;
+  // display: flex;
   overflow: scroll;
+  padding: 1rem;
   // overflow-x: hidden;
 }
 

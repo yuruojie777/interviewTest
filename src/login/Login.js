@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
+import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore"; 
+import {db} from '../firebase/Firebase';
 import './Login.scss';
 
 
@@ -118,12 +119,32 @@ export const Login = ()=>{
         try{
             setRegisterLoading(true);
             await signup(email, password);
-            navigate('/');
+            
         } catch{
             console.error("failed to signup");
         }
 
+        try{
+            console.log("preparing user's information...")
+
+            const userInfo = {
+                email: email,
+                username: email.split('@')[0],
+                createtime: new Date(),
+                friends: [],
+                isbanned: false,
+                avatar: 'https://ui-avatars.com/api/?name='+ email.split('@')[0]
+            }
+            console.log(userInfo);
+
+            await setDoc(doc(db, "user", email), userInfo);
+        } catch{
+            console.error("failed to add a user to database");
+        }
+
+
         setRegisterLoading(false);
+        navigate('/profile');
     }
 
     return(
@@ -147,7 +168,7 @@ export const Login = ()=>{
                             <i className='uil uil-eye-slash showHidePw' onClick={showHidePassWord}></i>
                         </div>
                         <div className="form">
-                            <button type="submit" id="submit" className="submit-btn">
+                            <button type="submit" className="submit-btn">
                                 {'Sign in'+(loginLoading?'...':'')}
                             </button>
                         </div>
@@ -169,7 +190,7 @@ export const Login = ()=>{
                             <i className="uil uil-check" ref={checkEmailValid}></i>
                         </div>
                         <div className="form">
-                            <input type="password" id="password" className="form__input" name='password'
+                            <input type="password" className="form__input" name='password'
                             onChange={(e)=>{setRegisterPassword(e.target.value)}}
                             autoComplete="off" placeholder='Enter your password (6 at least)'/>
                             <i className='uil uil-lock icon'></i>
@@ -185,7 +206,7 @@ export const Login = ()=>{
                             <i className="uil uil-check" ref={checkConfirmPwdValid}></i>
                         </div>
                         <div className="form">
-                            <button type="submit" id="submit" className="submit-btn" disabled={registerLoading}>
+                            <button type="submit" className="submit-btn" disabled={registerLoading}>
                                 {'Sign up'+(registerLoading?'...':'')}
                             </button>
                         </div>

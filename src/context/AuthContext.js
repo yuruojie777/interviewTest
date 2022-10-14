@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import {auth} from '../firebase/Firebase';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 import {Login} from '../login/Login'
+import {Loading} from './Loading'
+
+
 const AuthContext = React.createContext()
 
 
@@ -12,7 +15,7 @@ export function useAuth(){
 
 export function AuthProvider({children}) {
 
-
+    const [uid, setUid] = useState('');
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true);
 
@@ -47,9 +50,8 @@ export function AuthProvider({children}) {
 
     function logout() {
         signOut(auth).then(() => {
-            // Sign-out successful.
+            setUid(0);
           }).catch((error) => {
-            // An error happened.
           });
     }
 
@@ -57,21 +59,18 @@ export function AuthProvider({children}) {
 
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            console.log('check user!!')
             if (user) {
-                console.log('i am alive')
-              // User is signed in, see docs for a list of available properties
-              // https://firebase.google.com/docs/reference/js/firebase.User
               const uid = user.uid;
+              setUid(uid);
               setCurrentUser(user);
-              // ...
+              setLoading(false);
             } else {
-              // User is signed out
-              // ...
             }
         });
 
         return unsubscribe;
-    },[])
+    },[uid])
 
 
 
@@ -85,7 +84,7 @@ export function AuthProvider({children}) {
 
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!loading?children:<Loading/>}
         </AuthContext.Provider>
     )
 }

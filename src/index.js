@@ -15,6 +15,8 @@ import {Tech} from './tech/Tech';
 import {About} from './about/About';
 import { AuthProvider } from './context/AuthContext';
 import { Profile } from './profile/Profile';
+import { Dashboard } from './home/Dashboard';
+import { Tool } from './tool/Tool';
 
 
 const router = createBrowserRouter([
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <AuthProvider><App/></AuthProvider>,
     children: [
+      {
+        path: "/",
+        element: <Dashboard/>,
+      },
       {
         path: "/blog",
         element: <Blog/>,
@@ -33,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About/>
+      },
+      {
+        path: "/tool",
+        element: <Tool/>
       }
     ],
   },
