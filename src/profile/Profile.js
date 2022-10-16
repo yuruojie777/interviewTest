@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import './profile.scss'
 import { useAuth } from '../context/AuthContext';
 import {updateProfile } from "firebase/auth";
-import { collection, setDoc, doc, query, orderBy, onSnapshot, where, updateDoc } from "firebase/firestore"; 
+import { collection, doc, query, onSnapshot, where, updateDoc } from "firebase/firestore"; 
 import {db} from '../firebase/Firebase';
 export const Profile = () => {
 
@@ -14,11 +14,13 @@ export const Profile = () => {
     const navigate = useNavigate();
 
     async function updateUserProfile(username, photoUrl){
+        if(username.length === 0) {
+            alert('Username cannot be null');
+            return
+        }
         updateProfile(currentUser, {
             displayName: username, photoURL: photoUrl
           }).then(() => {
-            // Profile updated!
-            // ...
             const q = query(collection(db, "user"), where("email", "==", currentUser.email));
             onSnapshot(q, (querySnapshot) => {
                 querySnapshot.forEach((document) => {
@@ -29,18 +31,18 @@ export const Profile = () => {
                     });
                 });
             });
+            
 
           }).catch((error) => {
-            // An error occurred
-            // ...
+            alert('Update failed');
           });
+          navigate('/');
     }
 
 
     async function onClickUpdate(e){
         e.preventDefault();
         await updateUserProfile(usernameRef.current.value, photoUrlRef.current.value);
-        navigate('/');
     }
 
 

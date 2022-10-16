@@ -21,9 +21,13 @@ $clr-bg: #5771f3;
         height: 300px !important;
         // width: 100vw !important;
         // height: 100vh !important;
+
+        & .friend-side-bar{
+            font-size: xx-small
+        }
     }
     .show{
-        left: 80% !important;
+        left: 89% !important;
         top: 10%;
         scale: 1;
         opacity: 1;
@@ -61,9 +65,9 @@ $clr-bg: #5771f3;
     & .friend-side-bar {
         grid-area: friend-side-bar;
         background-color: #581b98;
-        padding-right: 1rem;
-        padding-left: 1rem;
-        overflow-x: hidden;
+        padding: 0.5rem 1rem;
+
+        overflow-x: scroll;
         overflow-y: scroll;
 
 

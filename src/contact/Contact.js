@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Contact.scss';
-import { collection, setDoc, addDoc, doc, query, onSnapshot, where, getDocs, updateDoc, runTransaction, arrayUnion} from "firebase/firestore"; 
+import { collection, setDoc, doc, query, onSnapshot, where, getDocs, updateDoc, runTransaction, arrayUnion} from "firebase/firestore"; 
 import {db} from '../firebase/Firebase';
 
 export const Contact = (props) => {
@@ -76,7 +76,7 @@ export const Contact = (props) => {
               const fromDoc = await transaction.get(fromRef);
               const toDoc = await transaction.get(toRef);
               if (!fromDoc.exists() || !toDoc.exists()) {
-                throw "Document does not exist!";
+                throw new Error("Document does not exist!");
               }
               transaction.update(fromRef, { friends: arrayUnion(props.currentUser.email) });
               transaction.update(toRef, { friends: arrayUnion(email) });
@@ -134,6 +134,7 @@ export const Contact = (props) => {
             });
             setfriendRequest([...request]);
         });
+        return unsubscribe;
       },[])
 
 
@@ -149,7 +150,7 @@ export const Contact = (props) => {
         </div>
 
         <form onSubmit={e=>searchUser(e)}>
-            <input placeholder="Input Your Friend's Email" onChange={e=>setEmail(e.target.value)}></input>
+            <input placeholder="Input Email" onChange={e=>setEmail(e.target.value)}></input>
             <button type='submit'><box-icon name='search' color='#f3efef' ></box-icon></button>
         </form>
         <ul>

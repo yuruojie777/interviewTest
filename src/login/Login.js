@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, {useEffect, useRef, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore"; 
+import {setDoc, doc } from "firebase/firestore"; 
 import {db} from '../firebase/Firebase';
 import './Login.scss';
-
+import {auth} from '../firebase/Firebase';
+import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut  } from "firebase/auth";
 
 export const Login = ()=>{
 
@@ -24,7 +25,24 @@ export const Login = ()=>{
     const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
     const [registerLoading, setRegisterLoading] = useState(false);
     
-    const {signup, login, currentUser} = useAuth();
+    // const {signup, login} = useAuth();
+
+    function signup(email, password) {
+        createUserWithEmailAndPassword(auth, email, password)
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error(errorMessage);
+        });
+
+    }
+
+    function login(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error(errorMessage)
+        });
+    }
 
     const validateEmail = (email) => {
         return String(email)
@@ -144,15 +162,13 @@ export const Login = ()=>{
 
 
         setRegisterLoading(false);
-        navigate('/profile');
+        navigate('/');
     }
 
     return(
         <div id='container' ref={loginContainer}>
             {/* Login */}
             <div id='forms'>
-
-
                 <div id='login-container'>
                     <h1 className='title'>Sign in</h1>
                     <form className='form-group' onSubmit={(e)=>handleOnSumbitLogin(e)}>
@@ -213,7 +229,6 @@ export const Login = ()=>{
                     </form>
                     <a href='#' className='toggle login' onClick={()=>{loginContainer.current.classList.remove('active');document.title='Login'}}>login here!</a>
                 </div>
-
             </div>
         </div>
     )

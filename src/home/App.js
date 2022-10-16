@@ -8,8 +8,10 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useAuth } from '../context/AuthContext';
 import { Contact } from '../contact/Contact';
-import { Loading } from '../context/Loading';
-
+import { Tool } from '../tool/Tool';
+import {Blog} from '../blog/Blog';
+import {Tech} from '../tech/Tech';
+import {About} from '../about/About';
 const firebaseConfig = {
   apiKey: "AIzaSyAxsKt9f2cpo8MM243ZuOT_QZ_jKmmlpdU",
   authDomain: "test-for-yuruojie.firebaseapp.com",
@@ -31,7 +33,7 @@ function App() {
   const {currentUser, logout} = useAuth();
   const [userInfo, setUserInfo] = useState({});
   const [login, setLogin] = useState(false);
-
+  const [currentContent, setCurrentContent] = useState('main');
   const navigate = useNavigate();
 
 
@@ -42,7 +44,7 @@ function App() {
 
 
   function onClickAvatarButton(){
-    if(currentUser!=undefined){
+    if(currentUser!==undefined){
       const dropdown = document.getElementsByClassName('drop-down-menu')[0]
       if(dropdown.classList.contains('show-dropdown')) dropdown.classList.remove('show-dropdown');
       else dropdown.classList.add('show-dropdown');
@@ -56,9 +58,59 @@ function App() {
   }
 
 
+  function onClickLink(e){
+    // console.log(e.target.text);
+    setCurrentContent(e.target.text);
+    document.getElementsByClassName('blog-link')[0].classList.add('active');
+    switch(e.target.text){
+      case 'Blog':
+        document.getElementsByClassName('blog-link')[0].classList.add('active');
+        document.getElementsByClassName('tech-link')[0].classList.remove('active');
+        document.getElementsByClassName('tool-link')[0].classList.remove('active');
+        document.getElementsByClassName('about-link')[0].classList.remove('active');
+        break;
+      case 'Tech':
+        document.getElementsByClassName('blog-link')[0].classList.remove('active');
+        document.getElementsByClassName('tech-link')[0].classList.add('active');
+        document.getElementsByClassName('tool-link')[0].classList.remove('active');
+        document.getElementsByClassName('about-link')[0].classList.remove('active');
+        break;
+      case 'Tool':
+        document.getElementsByClassName('blog-link')[0].classList.remove('active');
+        document.getElementsByClassName('tech-link')[0].classList.remove('active');
+        document.getElementsByClassName('tool-link')[0].classList.add('active');
+        document.getElementsByClassName('about-link')[0].classList.remove('active');
+        break;
+      case 'About':
+        document.getElementsByClassName('blog-link')[0].classList.remove('active');
+        document.getElementsByClassName('tech-link')[0].classList.remove('active');
+        document.getElementsByClassName('tool-link')[0].classList.remove('active');
+        document.getElementsByClassName('about-link')[0].classList.add('active');
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  function getMainContent(){
+    // console.log(currentContent);
+    switch(currentContent){
+      case 'Blog':
+        return <Blog></Blog>
+      case 'Tech':
+        return <Tech></Tech>
+      case 'Tool':
+        return <Tool></Tool>
+      case 'About':
+        return <About></About>
+      default:
+        return <></>
+    }
+
+  }
 
   useEffect(()=>{
-
     async function getUserInfo(email){
       if(currentUser!==undefined){
         const userRef = doc(db, "user", email);
@@ -80,15 +132,12 @@ function App() {
   },[currentUser])
 
 
-  return (<>
-  
-  {login?
-  <>
+  return (
    <div>
        <div className='container'>
          <nav className='navbar'>
            <div className='brand-title'>
-             <a href='/'><img src='logo-color.png'></img></a>
+             <a href='/'><img src='logo-color.png' alt=''></img></a>
            </div>
            <a className='my-toggle-button' 
           onClick={onHandleClickToggleButton}>
@@ -98,10 +147,18 @@ function App() {
           </a>
           <div className='navbar-links'>
             <ul>
-              <li><a href='blog'>Blog</a></li>
-              <li><a href='tech'>Tech</a></li>
-              <li><a href='tool'>Tool</a></li>
-              <li><a href='about'>About</a></li>
+              <li className='blog-link'>
+                <a onClick={e=>onClickLink(e)}>Blog</a>
+              </li>
+              <li className='tech-link'>
+                <a onClick={e=>onClickLink(e)}>Tech</a>
+              </li>
+              <li className='tool-link'>
+                <a onClick={e=>onClickLink(e)}>Tool</a>
+              </li>
+              <li className='about-link'>
+                <a onClick={e=>onClickLink(e)}>About</a>
+              </li>
             </ul>
           </div>
   
@@ -122,7 +179,10 @@ function App() {
   
         
         <main id='main'>
-            <Outlet/>
+            {/* <Outlet/> */}
+            {
+              getMainContent()
+            }
         </main>
         <div id='sidebar'>
           <SideBar/>
@@ -149,12 +209,6 @@ function App() {
         </div>:''
       }
     </div>
-  </>
-  :
-  <Loading/>  
-  }
-
-  </>  
   );
 }
 

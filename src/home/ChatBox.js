@@ -1,6 +1,6 @@
 import './ChatBox.scss';
 import {useState,useRef, useEffect} from 'react';
-import { collection, setDoc, doc, query, orderBy, onSnapshot, where, getDocs, getDoc } from "firebase/firestore"; 
+import { collection, setDoc, doc, query, onSnapshot, where, getDocs } from "firebase/firestore"; 
 import {db} from '../firebase/Firebase';
 
   
@@ -10,7 +10,6 @@ const ChatBox = (props)=>{
     const [message, setMessage] = useState([]);
     const [friends, setFriends] = useState([]);
     const [chatTo, setChatTo] = useState('');
-    const [loading, setLoading] = useState(false);
     const chatListRef = useRef(null);
 
     async function sendMessage(e){
@@ -36,14 +35,14 @@ const ChatBox = (props)=>{
         
     }
 
-    function getUserProfile(email, list){
-        const q = query(collection(db, "message"), where("email", "==", email));
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                list.push(doc.data());
-            });
-        });
-    }
+    // function getUserProfile(email, list){
+    //     const q = query(collection(db, "message"), where("email", "==", email));
+    //     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    //         querySnapshot.forEach((doc) => {
+    //             list.push(doc.data());
+    //         });
+    //     });
+    // }
 
 
     async function getUserFriend() {
@@ -99,6 +98,8 @@ const ChatBox = (props)=>{
             });
             setMessage(prev=>[...prev, ...messages]);
         });
+
+        return unsubscribe;
     },[])
 
 
@@ -112,6 +113,8 @@ const ChatBox = (props)=>{
             });
             setMessage(prev=>[...prev, ...messages]);
         });
+
+        return unsubscribe;
     },[])
 
 
